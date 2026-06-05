@@ -9,10 +9,9 @@
 
 ## Domain
 
-<!-- What topic or category of knowledge does your system cover?
-     Why is this knowledge valuable, and why is it hard to find through official channels?
-     Example: "Student reviews of CS professors at [university] — useful because official
-     course descriptions don't reflect teaching style, exam difficulty, or workload." -->
+**NYU off-campus housing experiences and survival advice for students**
+
+This unofficial guide focuses on NYU students' off-campus housing experiences: where students look for housing, what rent ranges they report, which neighborhoods come up often, how early they search, and what tradeoffs they face compared with dorming. This knowledge is hard to find because the most useful advice is scattered across Reddit threads, NYU resource pages, commuter-life posts, and housing portals rather than being organized in one student-friendly guide. The system should answer practical student questions using both official NYU resources and unofficial lived-experience discussions.
 
 ---
 
@@ -24,16 +23,16 @@
 
 | # | Source | Type | URL or file path |
 |---|--------|------|-----------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
-| 6 | | | |
-| 7 | | | |
-| 8 | | | |
-| 9 | | | |
-| 10 | | | |
+| 1 | r/nyu megathread: searches for on-campus or off-campus housing | Reddit thread | https://www.reddit.com/r/nyu/comments/18elmin/megathread_searches_for_oncampus_or_offcampus/ |
+| 2 | How hard is it to live off campus? | Reddit thread | https://www.reddit.com/r/nyu/comments/1ibva9c/how_hard_is_it_to_live_off_campus/ |
+| 3 | Where do students find off-campus apartments these days? | Reddit thread | https://www.reddit.com/r/nyu/comments/1jai7o9/where_do_students_find_offcampus_apartments_these/ |
+| 4 | For those living off campus, how much is rent? | Reddit thread | https://www.reddit.com/r/nyu/comments/muupej/for_those_who_are_living_off_campus_how_much_is/ |
+| 5 | How long before the start of the semester did you start looking? | Reddit thread | https://www.reddit.com/r/nyu/comments/o1r94w/people_living_offcampus_how_long_before_the_start/ |
+| 6 | Questions regarding off-campus housing | Reddit thread | https://www.reddit.com/r/nyu/comments/avc7qv/questions_regarding_offcampus_housing/ |
+| 7 | Is it cheaper to live on or off campus? | Reddit thread | https://www.reddit.com/r/nyu/comments/twlt4z/is_it_cheaper_to_live_on_or_off_campus/ |
+| 8 | NYU Off-Campus Housing portal | Official NYU page | https://offcampushousing.nyu.edu/ |
+| 9 | Home away from campus: NYU's commuter community | Meet NYU article | https://meet.nyu.edu/life/campus-resources/home-away-from-campus-nyus-commuter-community/ |
+| 10 | Should I live off or on campus as an NYU student? | Meet NYU article | https://meet.nyu.edu/life/residential-life/should-i-live-off-or-on-campus-as-an-nyu-student/ |
 
 ---
 
@@ -151,9 +150,9 @@
 
 **Instance 1**
 
-- *What I gave the AI:*
-- *What it produced:*
-- *What I changed or overrode:*
+- *What I gave the AI:* Milestone 1 instructions and starter repo URL.
+- *What it produced:* A focused domain, source list, skim notes, checkpoint questions, and documentation update plan.
+- *What I changed or overrode:* I reviewed the proposed sources and replaced harder-to-access pages with more reliable NYU/Meet NYU sources.
 
 **Instance 2**
 
