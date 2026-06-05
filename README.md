@@ -73,22 +73,23 @@ Reddit comments carry rent figures, neighborhoods, and timing tips in single pos
 
 **Model used:**
 
+`all-MiniLM-L6-v2` via `sentence-transformers`, stored in ChromaDB (`chroma_db/`), top-k = 5.
+
 **Production tradeoff reflection:**
+
+See `planning.md` Retrieval Approach section.
 
 ---
 
 ## Grounded Generation
 
-<!-- Explain how your system enforces grounding — how does it prevent the LLM from answering
-     beyond the retrieved documents?
-     Describe both your system prompt (what instruction you gave the model) and any structural
-     choices (e.g., how you formatted the context, whether you filtered low-relevance chunks).
-     Do not just say "I told it to use the documents" — show the actual instruction or explain
-     the mechanism. -->
-
 **System prompt grounding instruction:**
 
+The system prompt in `generate.py` requires answers **only** from labeled `[Source N]` chunks, mandates the exact refusal phrase when context is insufficient, forbids general NYU/NYC knowledge, and requires inline `[Source N]` citations. Retrieval with best cosine distance above **0.52** skips the LLM and returns a refusal. Temperature is **0.1**.
+
 **How source attribution is surfaced in the response:**
+
+Sources are **programmatically appended** after generation in `generate.py` (`_append_sources`) using chunk metadata (`source_file`, `doc_type`, `title`, `url`). The Gradio UI also shows the same list in the **Retrieved from** box via `query.ask()`.
 
 ---
 
