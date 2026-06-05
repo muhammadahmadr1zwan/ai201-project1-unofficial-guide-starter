@@ -2,8 +2,40 @@
 
 **NYU off-campus housing guide** — a retrieval-augmented system over Reddit threads and NYU housing resources.
 
+**GitHub:** https://github.com/muhammadahmadr1zwan/ai201-project1-unofficial-guide-starter  
+
+**Setup (first time):**
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+pip install -r requirements.txt
+cp .env.example .env            # add GROQ_API_KEY
+python run_pipeline.py
+python build_index.py
+python app.py
+```
+
 **Run the app:** `python app.py` → open http://localhost:7860  
-**Demo video:** *[Add your 3–5 minute recording link here before submission]*
+**Demo video:** *[Add your 3–5 minute recording link here before submitting to the Course Portal]*
+
+### Submission checklist (Course Portal)
+
+| Requirement | Location in repo |
+|-------------|------------------|
+| Forked GitHub repo link | Above |
+| `planning.md` (pre-implementation spec) | Repo root |
+| Domain + 10 document sources | README — Domain, Document Sources |
+| Chunking strategy + 5 sample chunks | README — Chunking Strategy, Sample Chunks |
+| Embedding model + production tradeoffs | README — Embedding Model |
+| 3+ retrieval tests + relevance explanations | README — Retrieval Test Results |
+| Grounding enforcement + 2 example responses + 1 refusal | README — Grounded Generation, Example Grounded Responses |
+| Query interface + transcript | README — Query Interface |
+| Evaluation report (5 questions) | README — Evaluation Report |
+| Failure case (pipeline-specific) | README — Failure Case Analysis |
+| Spec reflection | README — Spec Reflection |
+| AI usage (2+ instances) | README — AI Usage |
+| Demo video (3–5 min) | Link at top of README — *you record this* |
 
 ---
 
@@ -56,6 +88,68 @@ Reddit housing advice is concentrated in individual comments (rent, timing, plat
 
 ---
 
+## Sample Chunks
+
+Five representative chunks after cleaning and chunking (metadata header + body):
+
+**Chunk 1 — Source: `reddit_04.txt` (For those living off campus, how much is rent?)**
+
+> Personally I live in a 2BR with a roommate in Brooklyn, and pay exactly 1k for my part of the rent… It takes me ~35-45 minutes to get to WSQ campus.
+
+**Chunk 2 — Source: `reddit_04.txt`**
+
+> Astoria, I take the n. The commute is a bit longer if I take the w. Overall not terrible. Also I have a housemate…
+
+**Chunk 3 — Source: `reddit_05.txt` (How long before the semester did you start looking?)**
+
+> Plan to move in 2 weeks before the semester begins. For that start looking about 5 weeks before. The market moves really fast…
+
+**Chunk 4 — Source: `official_08.txt` (NYU Off-Campus Housing portal)**
+
+> Sample listings on the portal show a wide price range… from roughly $1,595 to nearly $7,000 per month depending on building, neighborhood, and unit size.
+
+**Chunk 5 — Source: `official_10.txt` (Should I live off or on campus?)**
+
+> Cost is a major factor for both options. On-campus housing is expensive, but off-campus costs vary widely by neighborhood, apartment size, roommates, utilities, and broker fees.
+
+---
+
+## Retrieval Test Results
+
+Tested with `python test_retrieval.py` after `python build_index.py` (top-5 shown; top-3 listed here).
+
+### Query 1: How much do NYU students usually pay for off-campus rent?
+
+| Rank | Distance | Source | Chunk excerpt |
+|------|----------|--------|---------------|
+| 1 | 0.150 | `reddit_04.txt` | Post asking what students should pay for off-campus rent / studios |
+| 2 | 0.171 | `official_08.txt` | Portal renter resources and listing price ranges |
+| 3 | 0.196 | `reddit_04.txt` | Comment: studio minimum $1,300–1,500; $1,800–2k near NYU buildings |
+
+**Why these chunks are relevant:** The question asks for typical rent. Rank 1 is the dedicated rent thread; rank 3 gives explicit dollar ranges; rank 2 adds official listing bounds. Together they support a range-style answer rather than a single number.
+
+### Query 2: How early should I start looking for an apartment before fall semester?
+
+| Rank | Distance | Source | Chunk excerpt |
+|------|----------|--------|---------------|
+| 1 | 0.274 | `reddit_05.txt` | Found apartment ~1.5 weeks before move-in; lease timing |
+| 2 | 0.282 | `reddit_05.txt` | "Start looking about 5 weeks before"; market moves fast |
+| 3 | 0.313 | `reddit_05.txt` | Looking on StreetEasy in June for Aug move-in often too late |
+
+**Why these chunks are relevant:** All three come from the timing thread (`reddit_05`) and mention search lead time relative to fall move-in—exactly the topic of the query.
+
+### Query 3: Where do NYU students look for roommates, sublets, or apartments?
+
+| Rank | Distance | Source | Chunk excerpt |
+|------|----------|--------|---------------|
+| 1 | 0.254 | `reddit_06.txt` | Facebook + Craigslist helpful; NYU links/apps |
+| 2 | 0.255 | `reddit_06.txt` | NYU Housing group, Craigslist, Facebook Marketplace |
+| 3 | 0.261 | `reddit_03.txt` | Craigslist; credible listings often in Brooklyn |
+
+**Why these chunks are relevant:** Students name concrete platforms (Facebook groups, Craigslist) and NYU-affiliated search—matching "where to look" rather than general housing advice.
+
+---
+
 ## Embedding Model
 
 **Model used:**
@@ -91,6 +185,84 @@ For a production NYU student guide, I would weigh: (1) **domain/colloquial match
 1. Inline `[Source N]` citations in the answer body (model-generated, tied to chunk labels in the prompt)  
 2. A **Retrieved from** footer listing `source_file`, `doc_type`, title, and URL  
 3. Gradio **Retrieved from** textbox (`app.py` → `query.ask()`)
+
+---
+
+## Example Grounded Responses
+
+Full pipeline: `query.ask()` → retrieval (top-5) → Groq → programmatic **Retrieved from** footer.
+
+### Example 1 — Rent (grounded, sources visible)
+
+**Query:** How much do NYU students usually pay for off-campus rent?
+
+**Answer (excerpt):**
+
+> According to [Source 2], the official NYU Off-Campus Housing portal, sample listings show a wide price range… roughly $1,595 to nearly $7,000 per month… [Source 3] suggests a studio minimum of $1,300–1,500… closer to $1,800–2,000 near NYU buildings…
+>
+> ---
+> **Retrieved from:**
+> - reddit_04.txt (reddit) — For those who are living off campus, how much is your rent? — https://www.reddit.com/r/nyu/comments/muupej/...
+> - official_08.txt (official) — NYU Off-Campus Housing portal — https://offcampushousing.nyu.edu/
+> - reddit_07.txt (reddit) — Is it cheaper to live on or off campus? — ...
+
+### Example 2 — On vs off campus (grounded, tradeoffs)
+
+**Query:** Is living off campus cheaper or better than dorming?
+
+**Answer (excerpt):**
+
+> According to [Source 1], living off campus can be cheaper if a solid deal is found… [Source 2] paying ~$1600/mo off-campus vs more on campus… [Source 5] emphasizes transportation, furniture, and broker fees… Overall, the cost comparison varies depending on individual circumstances…
+>
+> ---
+> **Retrieved from:**
+> - reddit_07.txt (reddit) — Is it cheaper to live on or off campus? — https://www.reddit.com/r/nyu/comments/twlt4z/...
+
+### Example 3 — Out-of-scope (refusal)
+
+**Query:** What is the best NYU dining hall for pizza?
+
+**Answer:**
+
+> I don't have enough information on that in my retrieved documents.
+
+(Retrieval distances were weak for this query; the pipeline declined rather than inventing dining-hall advice.)
+
+---
+
+## Query Interface
+
+**App:** `python app.py` → Gradio at http://localhost:7860
+
+| Field | Description |
+|-------|-------------|
+| **Your question** (textbox) | Student types a natural-language housing question |
+| **Ask** (button) | Runs retrieval + generation |
+| **Answer** (textbox) | Grounded response with `[Source N]` citations and **Retrieved from** footer |
+| **Retrieved from** (textbox) | Programmatic bullet list of source files, types, titles, and URLs |
+
+**Sample interaction transcript**
+
+```
+[Your question]
+How much do NYU students usually pay for off-campus rent?
+
+[Ask]
+
+[Answer]
+According to [Source 2], the NYU Off-Campus Housing portal shows listings from roughly
+$1,595 to nearly $7,000 per month... [Source 3] on reddit suggests studios from about
+$1,300–1,500, up to $1,800–2,000 near campus...
+
+---
+**Retrieved from:**
+• reddit_04.txt (reddit) — For those who are living off campus, how much is your rent? — [URL]
+• official_08.txt (official) — NYU Off-Campus Housing portal — [URL]
+• reddit_07.txt (reddit) — Is it cheaper to live on or off campus? — [URL]
+
+[Retrieved from]
+(same bullet list as above, for quick scanning in the UI)
+```
 
 ---
 
