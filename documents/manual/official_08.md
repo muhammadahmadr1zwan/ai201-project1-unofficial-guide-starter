@@ -1,0 +1,23 @@
+# NYU Off-Campus Housing portal
+
+URL: https://offcampushousing.nyu.edu/
+
+## Students, Faculty and Staff
+
+Register on the portal to start your housing search. You can search for housing within your budget and see what is nearby campus.
+
+## Property Listers
+
+Property owners can create an account to add and edit listings and track email leads from interested students.
+
+## Looking for a Roommate
+
+Students can create a profile on the portal and search for a roommate through the university-affiliated off-campus housing system.
+
+## Renter Resources
+
+The portal provides renter resources for students renting for the first time, including guidance meant to support a positive off-campus leasing experience.
+
+## Explore Rentals
+
+Sample listings on the portal show a wide price range. Examples include studios and multi-bedroom units from roughly $1,595 to nearly $7,000 per month depending on building, neighborhood, and unit size. Students should treat listed ranges as market examples rather than a single expected rent.

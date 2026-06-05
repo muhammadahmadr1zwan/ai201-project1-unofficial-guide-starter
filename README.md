@@ -47,11 +47,19 @@ This unofficial guide focuses on NYU students' off-campus housing experiences: w
 
 **Chunk size:**
 
+Reddit: ≤500 characters per comment/post (atomic when short). Official pages: ≤600 characters per paragraph under a section heading.
+
 **Overlap:**
+
+Reddit: 80 characters when splitting long comments only. Official: 100 characters between chunks when a section exceeds 600 characters.
 
 **Why these choices fit your documents:**
 
+Reddit comments carry rent figures, neighborhoods, and timing tips in single posts; official NYU/Meet NYU pages are structured by heading. See `planning.md` for full reasoning.
+
 **Final chunk count:**
+
+158 chunks across 10 sources (run `python run_pipeline.py` to regenerate).
 
 ---
 

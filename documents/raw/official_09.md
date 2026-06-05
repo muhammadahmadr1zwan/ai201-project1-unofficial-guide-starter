@@ -1,0 +1,19 @@
+# Home away from campus: NYU's commuter community
+
+URL: https://meet.nyu.edu/life/campus-resources/home-away-from-campus-nyus-commuter-community/
+
+## Why students live off campus
+
+Many NYU students live off campus every year. Commuting can be challenging, but students may stay close to family, save money by renting outside Manhattan, and still find community on campus.
+
+## Commuter Student Council
+
+The Commuter Student Council advocates for commuter needs and hosts events such as trips, panels, and social activities to help off-campus students build community.
+
+## Commuter experience and tradeoffs
+
+Commuters may need strong time management for morning classes and weather delays. Benefits include personal space and independence while still using NYU campus resources.
+
+## On-campus resources for commuters
+
+NYU provides commuter lounges on the Washington Square and Brooklyn campuses with study space, kitchens, and lockers. These lounges function as a home base between classes for students who do not live in the dorms.
